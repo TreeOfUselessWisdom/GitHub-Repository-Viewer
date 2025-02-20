@@ -1,0 +1,40 @@
+﻿@model List<Repository>
+
+<div class="container mt-4">
+    <h1>GitHub Repository Viewer</h1>
+    <form method="post" class="mb-4">
+        <div class="form-group">
+            <label for="username">GitHub Username:</label>
+            <input type="text" id="username" name="username" class="form-control w-50" />
+        </div>
+        <button type="submit" class="btn btn-primary">View Repositories</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <h2>Repositories</h2>
+        <div class="row">
+            @foreach (var repo in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">@repo.Name</h5>
+                            <p class="card-text">@(repo.Description ?? "No description available.")</p>
+                            <p>Stars: @repo.Stars | Forks: @repo.Forks</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else if (Model != null && Model.Count == 0)
+    {
+        <p>No repositories found for this user.</p>
+    }
+</div>
